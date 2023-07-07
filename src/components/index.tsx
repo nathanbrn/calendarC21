@@ -1,7 +1,6 @@
 import { Button } from './Button';
 import { CalendarComponent } from './Calendar';
-import { Main } from './Main';
 import { Logo } from './Logo';
+import { Main } from './Main';
 
-export { Button, CalendarComponent, Main, Logo };
-
+export { Button, CalendarComponent, Logo, Main };

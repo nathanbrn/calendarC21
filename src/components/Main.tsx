@@ -1,5 +1,4 @@
 import { View } from 'react-native';
-import { Logo } from './Logo';
 
 interface MainProps {
   children?: React.ReactNode;

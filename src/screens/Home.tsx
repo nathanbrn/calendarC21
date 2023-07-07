@@ -1,5 +1,5 @@
-import { Image, View } from 'react-native';
-import { CalendarComponent, Logo, Main } from '../components';
+import { View } from 'react-native';
+import { CalendarComponent, Main } from '../components';
 
 export default function Home() {
   return (

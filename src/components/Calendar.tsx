@@ -1,5 +1,4 @@
-import { StyleSheet } from "react-native";
-import { Calendar, LocaleConfig } from "react-native-calendars";
+import { Calendar, LocaleConfig } from 'react-native-calendars';
 
 LocaleConfig.locales['pt-br'] = {
   monthNames: [
@@ -16,10 +15,10 @@ LocaleConfig.locales['pt-br'] = {
     'Novembro',
     'Dezembro'
   ],
-monthNamesShort: ['Jan.', 'Fev.', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul.', 'Ago', 'Set.', 'Out.', 'Nov.', 'Dez.'],
-dayNames: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'],
-dayNamesShort: ['Dom.', 'Seg.', 'Ter.', 'Quar.', 'Quin.', 'Sex.', 'Sab.'],
-today: "Hoje"
+  monthNamesShort: ['Jan.', 'Fev.', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul.', 'Ago', 'Set.', 'Out.', 'Nov.', 'Dez.'],
+  dayNames: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'],
+  dayNamesShort: ['Dom.', 'Seg.', 'Ter.', 'Quar.', 'Quin.', 'Sex.', 'Sab.'],
+  today: 'Hoje'
 };
 
 LocaleConfig.defaultLocale = 'pt-br';
