@@ -8,8 +8,8 @@ export function Logo() {
         <Text className="text-lg text-white right-1">void</Text>
       </View>
       <View className="flex-row absolute -bottom-1 ">
-        <Text className="text-3xl text-white left-2">C</Text>
-        <Text className="text-sm text-white mt-2 left-2">hildren</Text>
+        <Text className="text-3xl text-white left-0">C</Text>
+        <Text className="text-sm text-white mt-2 left-0">hild</Text>
       </View>
       <Text className="text-white text-xs right-1 top-0">Cycle</Text>
       <Text style={{ fontSize: 6 }} className="text-white right-1 bottom-1">21</Text>

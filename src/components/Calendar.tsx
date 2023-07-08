@@ -33,7 +33,7 @@ export function CalendarComponent() {
         minDate='2023-01-01'
         markingType="dot"
         markedDates={{
-          '2023-07-01': { selected: true, marked: true, selectedColor: 'blue' },
+          '2023-07-08' : { selected: true, marked: true, selectedColor: 'blue' },
         }}
         style={{
           backgroundColor: '#ffffff',
