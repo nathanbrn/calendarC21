@@ -1,3 +1,4 @@
+import { Text, View } from 'react-native';
 import { Calendar, LocaleConfig } from 'react-native-calendars';
 
 LocaleConfig.locales['pt-br'] = {
@@ -24,6 +25,7 @@ LocaleConfig.locales['pt-br'] = {
 LocaleConfig.defaultLocale = 'pt-br';
 
 export function CalendarComponent() {
+  const today = new Date();
 
   return (
     <>
@@ -33,10 +35,23 @@ export function CalendarComponent() {
         minDate='2023-01-01'
         markingType="dot"
         markedDates={{
-          '2023-07-08' : { selected: true, marked: true, selectedColor: 'blue' },
+          '2023-07-08' : { selected: true, marked: true, selectedColor: 'purple' },
         }}
-        style={{
-          backgroundColor: '#ffffff',
+        customHeaderTitle={
+          <View>
+            <Text className='text-Purple text-lg font-bold'>{today.toLocaleDateString('pt-BR', {
+              month: 'long',
+            }).charAt(0).toUpperCase() + today.toLocaleDateString('pt-BR', {
+              month: 'long',
+            }).slice(1)}  {today.toLocaleDateString('pt-BR', {
+              year: 'numeric',
+            })}</Text>
+          </View>
+        }
+        theme={{
+          textDayStyle: {
+            color: '#971cb7',
+          },
         }}
       />
     </>

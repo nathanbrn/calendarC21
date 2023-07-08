@@ -2,18 +2,17 @@ import { Text, TouchableOpacity } from 'react-native';
 
 interface ButtonProps {
   description?: string;
+  icon?: React.ReactNode;
   onClick?: () => void;
 }
 
-export function Button({ description, onClick }: ButtonProps) {
+export function Button({ description, onClick, icon }: ButtonProps) {
   return (
     <TouchableOpacity
       onPress={onClick}
-      className='mx-auto bg-Blue p-2 border rounded-md w-44 items-center'>
-      <Text className='text-white text-xl font-bold'
-      >
-        {description}
-      </Text>
+      className='flex-col mx-auto mb-1 bg-Blue py-2 px-3 rounded-md items-center justify-center'>
+      { icon && <Text className='text-white text-xl font-bold'>{icon}</Text>}
+      { description && <Text className='text-white text-sm font-bold'>{description}</Text>}
     </TouchableOpacity>
   );
 }

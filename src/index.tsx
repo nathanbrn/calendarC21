@@ -11,6 +11,7 @@ function DrawerRoutes() {
   return (
     <Drawer.Navigator
       screenOptions={{
+        headerShown: false,
         title: '',
         headerTintColor: '#ffffff',
         headerPressColor: '#ffffff',

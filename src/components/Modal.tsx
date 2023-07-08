@@ -1,14 +1,14 @@
-import { Modal, View } from 'react-native';
+import { Feather } from '@expo/vector-icons';
+import { Modal, View, Text } from 'react-native';
 import { Button } from './Button';
 import { CalendarComponent } from './Calendar';
 
 interface ModalProps {
   showModal: boolean;
   setShowModal: (showModal: boolean) => void;
-  setVisibleButton: (visibleButton: boolean) => void;
 }
 
-export function ModalComponent({ showModal, setShowModal, setVisibleButton }: ModalProps) {
+export function ModalComponent({ showModal, setShowModal }: ModalProps) {
   return (
     <Modal
       visible={showModal}
@@ -16,20 +16,23 @@ export function ModalComponent({ showModal, setShowModal, setVisibleButton }: Mo
       transparent={true}
     >
       <View
-        className='w-full justify-center border border-Purple rounded-t-lg absolute bottom-0'
+        className='w-full h-full justify-between border border-purple-300 rounded-t-lg absolute bottom-0 bg-white'
         style={{
-          // backgroundColor: 'rgba(0, 0, 0, 0.7)',
           elevation: 10
         }}
       >
-        <CalendarComponent />
         <Button
-          description='Close'
+          icon={<Feather name='chevron-down' size={32} color='gray' />}
           onClick={() => {
             setShowModal(false);
-            setVisibleButton(true);
           }}
         />
+        <View className='w-full items-center'>
+          <Text className='text-lg font-bold text-Purple'>Mais informações</Text>
+        </View>
+        <View>
+          <CalendarComponent />
+        </View>
       </View>
     </Modal>
   );
