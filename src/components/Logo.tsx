@@ -2,7 +2,7 @@ import { Text, View } from 'react-native';
 
 export function Logo() {
   return (
-    <View className="w-32 h-14 items-center justify-center relative flex-row mt-8">
+    <View className="w-32 h-14 items-center justify-center relative flex-row mt-10">
       <View className="flex-row gap-0">
         <Text className="text-4xl text-white mt-4">A</Text>
         <Text className="text-lg text-white right-1">void</Text>

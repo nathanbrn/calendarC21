@@ -11,7 +11,7 @@ function DrawerRoutes() {
   return (
     <Drawer.Navigator
       screenOptions={{
-        headerShown: false,
+        // headerShown: false,
         title: '',
         headerTintColor: '#ffffff',
         headerPressColor: '#ffffff',
@@ -51,6 +51,7 @@ function DrawerRoutes() {
         }}
       />
     </Drawer.Navigator>
+
   );
 }
 
