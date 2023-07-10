@@ -8,9 +8,10 @@ interface CustomModalTimerProps {
   currentMount?: string;
   currentYear?: string;
   currentWeek?: string;
+  checked: boolean;
 }
 
-export function CustomModalTimer({ setShowModal, currentDay, currentMount, currentYear, currentWeek }: CustomModalTimerProps) {
+export function CustomModalTimer({ setShowModal, currentDay, currentMount, currentYear, currentWeek, checked }: CustomModalTimerProps) {
 
   return (
     <>
@@ -28,8 +29,14 @@ export function CustomModalTimer({ setShowModal, currentDay, currentMount, curre
           <Text className='text-purple-500 font-bold text-lg'>
             {currentYear}
           </Text>
+          {checked && (
+            <View>
+              <Text className='text-base'>💊</Text>
+            </View>
+          )}
         </View>
         <Button
+          type='primary'
           description='Mais informações'
           icon={<Feather name='chevron-up' size={32} color='white' />}
           onClick={() => setShowModal(true)}

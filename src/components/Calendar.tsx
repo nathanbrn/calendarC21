@@ -35,7 +35,7 @@ export function CalendarComponent() {
         minDate='2023-01-01'
         markingType="dot"
         markedDates={{
-          '2023-07-08' : { selected: true, marked: true, selectedColor: 'purple' },
+          '2023-07-10' : { selected: true, marked: true, selectedColor: 'purple' },
         }}
         customHeaderTitle={
           <View>
@@ -52,6 +52,7 @@ export function CalendarComponent() {
           textDayStyle: {
             color: '#971cb7',
           },
+          arrowColor: '#971cb7',
         }}
       />
     </>

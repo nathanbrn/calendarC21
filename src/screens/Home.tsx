@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { Text, View } from 'react-native';
-import { CustomModalTimer, Main, ModalComponent } from '../components';
+import { CheckedModal, CustomModalTimer, Main, ModalComponent } from '../components';
 
 export default function Home() {
   const [showModal, setShowModal] = useState(false);
@@ -9,6 +9,7 @@ export default function Home() {
   const currentMount = useRef<string>();
   const currentYear = useRef<string>();
   const currentWeek = useRef<string>();
+  const [checked, setChecked ] = useState(false);
 
   useEffect(() => {
     currentDay.current = new Date().toLocaleDateString('pt-BR', {
@@ -34,12 +35,19 @@ export default function Home() {
       {currentWeek.current ? (
         <View className='mt-7'>
           <CustomModalTimer
+            checked={checked}
             currentDay={currentDay.current}
             currentMount={currentMount.current}
             currentYear={currentYear.current}
             currentWeek={currentWeek.current}
             setShowModal={setShowModal}
           />
+
+          <CheckedModal
+            checked={checked}
+            setChecked={setChecked}
+          />
+
           <ModalComponent setShowModal={setShowModal} showModal={showModal} />
         </View>
       ) : (

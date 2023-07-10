@@ -1,5 +1,5 @@
 import { Feather } from '@expo/vector-icons';
-import { Modal, View, Text } from 'react-native';
+import { Modal, Text, View } from 'react-native';
 import { Button } from './Button';
 import { CalendarComponent } from './Calendar';
 
@@ -16,22 +16,30 @@ export function ModalComponent({ showModal, setShowModal }: ModalProps) {
       transparent={true}
     >
       <View
-        className='w-full h-full justify-between border border-purple-300 rounded-t-lg absolute bottom-0 bg-white'
+        className='w-full h-full border border-purple-300 rounded-t-lg absolute bottom-0 bg-white'
         style={{
           elevation: 10
         }}
       >
         <Button
+          type='secondary'
+          description='Menos informações'
           icon={<Feather name='chevron-down' size={32} color='gray' />}
           onClick={() => {
             setShowModal(false);
           }}
         />
-        <View className='w-full items-center'>
-          <Text className='text-lg font-bold text-Purple'>Mais informações</Text>
-        </View>
-        <View>
+        <View className='mt-2 mb-10'>
           <CalendarComponent />
+        </View>
+        <View className='items-end justify-center my-2 bg-Purple w-96 h-10 border rounded-r-lg p-2'>
+          <Text className='text-white font-bold text-md text-center mx-4'>Dia atual</Text>
+        </View>
+        <View className='my-2 items-end justify-center bg-Red w-80 h-10 border rounded-r-lg p-2'>
+          <Text className='text-white font-bold text-md text-center mx-4'>Dias não tomados</Text>
+        </View>
+        <View className='my-2 items-end justify-center bg-green-500 w-64 h-10 border rounded-r-lg p-2'>
+          <Text className='text-white font-bold text-md text-center mx-4'>Dias tomados</Text>
         </View>
       </View>
     </Modal>
