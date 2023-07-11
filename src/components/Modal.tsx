@@ -36,10 +36,13 @@ export function ModalComponent({ showModal, setShowModal }: ModalProps) {
           <Text className='text-white font-bold text-md text-center mx-4'>Dia atual</Text>
         </View>
         <View className='my-2 items-end justify-center bg-Red w-80 h-10 border rounded-r-lg p-2'>
-          <Text className='text-white font-bold text-md text-center mx-4'>Dias não tomados</Text>
+          <Text className='text-white font-bold text-md text-center mx-4'>Periodo de pausa</Text>
         </View>
         <View className='my-2 items-end justify-center bg-green-500 w-64 h-10 border rounded-r-lg p-2'>
-          <Text className='text-white font-bold text-md text-center mx-4'>Dias tomados</Text>
+          <Text className='text-white font-bold text-md text-center mx-4'>Dias consumidos</Text>
+        </View>
+        <View className='my-2 items-end justify-center bg-orange-500 w-52 h-10 border rounded-r-lg p-2'>
+          <Text className='text-white font-bold text-md text-center mx-4'>Periodo para consumo</Text>
         </View>
       </View>
     </Modal>
