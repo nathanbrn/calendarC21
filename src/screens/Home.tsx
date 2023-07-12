@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { Text, View } from 'react-native';
+import { Dimensions, Text, View } from 'react-native';
 import { CheckedModal, CustomModalTimer, Main, ModalComponent } from '../components';
 
 export default function Home() {

@@ -1,8 +1,24 @@
-import { Text, View } from 'react-native';
+import { Dimensions, StyleSheet, Text, View } from 'react-native';
 
 export function Logo() {
+  const heightWindow = Dimensions.get('window').height;
+  const heightScreen = Dimensions.get('screen').height;
+
+  let styles;
+
+  if (heightWindow !== heightScreen) {
+    styles = StyleSheet.create({
+      logo: {
+        marginTop: 42,
+      }
+    });
+  }
+
   return (
-    <View className="w-32 h-14 items-center justify-center relative flex-row mt-10">
+    <View
+      className="w-32 h-14 items-center justify-center relative flex-row mt-10"
+      style={styles?.logo}
+    >
       <View className="flex-row gap-0">
         <Text className="text-4xl text-white mt-4">A</Text>
         <Text className="text-lg text-white right-1">void</Text>
