@@ -1,12 +1,12 @@
 import { StatusBar } from 'expo-status-bar';
-import Routes from './src';
 
 import 'react-native-gesture-handler';
+import { StackRouter } from './src/screens/Register';
 
 export default function App() {
   return (
     <>
-      <Routes />
+      <StackRouter />
       <StatusBar style='light' />
     </>
   );

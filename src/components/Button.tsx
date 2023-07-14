@@ -35,6 +35,15 @@ export function Button({ description, onClick, icon, type }: ButtonProps) {
         { description && <Text className='text-white text-sm font-bold'>{description}</Text>}
       </TouchableOpacity>
     );
+  } else if (type === 'confirm') {
+    return (
+      <TouchableOpacity
+        onPress={onClick}
+        className='flex-col border mx-auto mb-1 bg-Blue py-3 px-6 rounded-lg mt-4 items-center justify-center bg-purple-500'>
+        { icon && <Text className='text-white text-xl font-bold'>{icon}</Text>}
+        { description && <Text className='text-white text-sm font-bold'>{description}</Text>}
+      </TouchableOpacity>
+    );
   }
 
   return null;

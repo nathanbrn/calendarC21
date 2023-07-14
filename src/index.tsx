@@ -1,6 +1,5 @@
 import { Feather } from '@expo/vector-icons';
 import { createDrawerNavigator } from '@react-navigation/drawer';
-import { NavigationContainer } from '@react-navigation/native';
 import { View } from 'react-native';
 import { Logo } from './components';
 import { Home, Settings } from './screens';
@@ -56,8 +55,6 @@ function DrawerRoutes() {
 
 export default function Routes() {
   return (
-    <NavigationContainer>
-      <DrawerRoutes />
-    </NavigationContainer>
+    <DrawerRoutes />
   );
 }
