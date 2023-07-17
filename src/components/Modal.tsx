@@ -12,10 +12,10 @@ export function ModalComponent({ showModal, setShowModal }: ModalProps) {
   const heightWindow = Dimensions.get('window').height;
   const heightScreen = Dimensions.get('screen').height;
   let styles;
-  if (heightWindow !== heightScreen) {
+  if (heightWindow > heightScreen) {
     styles = StyleSheet.create({
       container: {
-        height: heightWindow + 8,
+        height: heightWindow + 6,
       },
       containerSubtitle: {
         marginBottom: 20,
