@@ -49,7 +49,7 @@ function Register({ navigation }: any) {
         animationType='slide'
       >
         <View className='flex-1 items-center justify-center'>
-          <Text className='text-2xl text-gray-200 font-bold '>Informe sua data de início</Text>
+          <Text className='text-2xl text-gray-200 font-bold '>Informe a data que iniciou</Text>
           <View className='flex-row items-center gap-1 mt-4 mb-2 p-2 mr-6'>
             <Feather name='calendar' size={32} color='rgb(209,213,219)' />
             <TextInput
@@ -73,6 +73,11 @@ function Register({ navigation }: any) {
               type='primary'
               description='Vou começar hoje'
               onClick={() => {
+                setDate(formatDate(new Date().toLocaleDateString('pt-BR', {
+                  day: '2-digit',
+                  month: '2-digit',
+                  year: 'numeric',
+                })));
                 setSecondaryModalVisible(false);
                 navigation.navigate('home');
               }}

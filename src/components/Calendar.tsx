@@ -1,6 +1,7 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Text, View } from 'react-native';
 import { Calendar, LocaleConfig } from 'react-native-calendars';
+import { InfoContext } from '../context/infoContext';
 
 LocaleConfig.locales['pt-br'] = {
   monthNames: [
@@ -27,101 +28,78 @@ LocaleConfig.defaultLocale = 'pt-br';
 
 export function CalendarComponent() {
   const today = new Date();
-  const [currentDate, setCurrentDate] = useState<string>('');
-  const [selected, setSelected] = useState('');
+
+  const { date } = useContext(InfoContext);
+  const [daySelected, setDaySelected] = useState<string>(formatDate(date));
+
+  function formatDate(date: string) {
+    const [day, month, year] = date.split('/');
+
+    const formattedDate = `${year}-${month}-${day}`;
+
+    return formattedDate;
+  }
 
   const [markedDates, setMarkedDates] = useState({
-    [currentDate?.toString()] : { selected: true, marked: true, selectedColor: 'purple' },
-    [selected]: {selected: true, disableTouchEvent: true, selectedColor: 'orange', dotColor: 'purple'},
-
-
-    '2023-07-15': {
+    [daySelected]: {
       periods: [
         {startingDay: true, endingDay: false, color: 'green'},
         {startingDay: true, endingDay: false, color: 'orange'}
       ]
     },
-    '2023-07-16': {
-      periods: [
-        {color: 'green'},
-        {color: 'orange'}
-      ]
-    },
-    '2023-07-17': {
-      periods: [
-        {color: 'green'},
-        {color: 'orange'}
-      ]
-    },
-    '2023-07-18': {
-      periods: [
-        {color: 'green'},
-        {color: 'orange'}
-      ]
-    },
-    '2023-07-19': {
-      periods: [
-        {color: 'transparent'},
-        {color: 'orange'}
-      ]
-    },
-    '2023-07-20': {
-      periods: [
-        {startingDay: false, endingDay: true, color: 'transparent'},
-        {startingDay: false, endingDay: true, color: 'orange'},
-      ]
-    },
-    '2023-07-21': {
-      periods: [
-        {startingDay: true, endingDay: false, color: 'red'},
-      ]
-    },
-    '2023-07-22': {
-      periods: [
-        {startingDay: false, endingDay: false, color: 'red'},
-      ]
-    },
-    '2023-07-23': {
-      periods: [
-        {startingDay: false, endingDay: false, color: 'red'},
-      ]
-    },
-    '2023-07-24': {
-      periods: [
-        {startingDay: false, endingDay: false, color: 'red'},
-      ]
-    },
   });
 
-  useEffect(() => {
-    const day = today.getDate().toString().length === 1 ? `0${today.getDate()}` : today.getDate();
-    const month = today.getMonth().toString().length === 1 ? `0${today.getMonth() + 1}` : today.getMonth() + 1;
-    const year = today.getFullYear();
+  // Função para calcular a data futura com base em uma data de referência
+  function calculateFutureDate(date: Date, days: number) {
+    const futureDate = new Date(date);
+    futureDate.setDate(futureDate.getDate() + days);
+    return futureDate.toISOString().slice(0, 10);
+  }
 
-    setCurrentDate(`${year}-${month}-${day}`);
-  }, [today]);
+  // Função para atualizar as marcações dos dias
+  function updateMarkedDates() {
+    const markedDatesCopy = { ...markedDates };
+
+    // Limpar marcações anteriores
+    Object.keys(markedDatesCopy).forEach((date) => {
+      delete markedDatesCopy[date];
+    });
+
+    // Marcar 21 dias a partir do dia selecionado com verde
+    const startDate = new Date(daySelected);
+    for (let i = 0; i < 21; i++) {
+      const date = calculateFutureDate(startDate, i);
+      markedDatesCopy[date] = { periods: [{ startingDay: true, endingDay: true, color: 'orange' }] };
+    }
+
+    // Marcar 8 dias após os 21 dias com vermelho
+    const endDate = calculateFutureDate(startDate, 21);
+    for (let i = 0; i < 8; i++) {
+      const date = calculateFutureDate(new Date(endDate), i);
+      markedDatesCopy[date] = { periods: [{ startingDay: true, endingDay: true, color: 'red' }] };
+    }
+
+    setMarkedDates(markedDatesCopy);
+  }
+
+  useEffect(() => {
+    updateMarkedDates();
+  }, [daySelected]);
 
   return (
     <>
       <Calendar
         className='border border-Gray m-3 rounded-lg'
-        onDayPress={day => {
-          setSelected(day.dateString);
-        }}
         minDate='2023-01-01'
         markingType="multi-period"
         markedDates={markedDates}
-        customHeaderTitle={
+        renderHeader={(date) => (
           <View>
-            <Text className='text-Purple text-lg font-bold'>{today.toLocaleDateString('pt-BR', {
-              month: 'long',
-            }).charAt(0).toUpperCase() + today.toLocaleDateString('pt-BR', {
-              month: 'long',
-            }).slice(1)}  {today.toLocaleDateString('pt-BR', {
-              year: 'numeric',
-            })}</Text>
+            <Text style={{ color: '#971cb7', fontSize: 16, fontWeight: 'bold' }}>
+              {date.toString('MMMM yyyy')}
+            </Text>
           </View>
-        }
+        )}
         theme={{
           textDayStyle: {
             color: '#971cb7',
