@@ -1,10 +1,11 @@
 import { Feather } from '@expo/vector-icons';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { Modal, Text, TextInput, View } from 'react-native';
 import Routes from '..';
 import { Button, Main } from '../components';
+import { InfoContext } from '../context/infoContext';
 
 function Initial({ navigation }: any) {
   return (
@@ -22,11 +23,11 @@ function Initial({ navigation }: any) {
 }
 
 function Register({ navigation }: any) {
+
+  const { name, date, setName, setDate } = useContext(InfoContext);
+
   const [primaryModalVisible, setPrimaryModalVisible] = useState(true);
   const [secondaryModalVisible, setSecondaryModalVisible] = useState(false);
-
-  const [name, setName] = useState<string>('');
-  const [date, setDate] = useState<string>('');
 
   function formatDate(date: string) {
     const dateRegex = /^(\d{2})(\d{2})(\d{4})$/;
@@ -93,6 +94,7 @@ function Register({ navigation }: any) {
             value={name}
             onChangeText={setName}
           />
+          <Text className='text-sm text-white text-start'>* Informe apenas o primeiro, ou no máximo até o segundo nome, ou sobrenome.</Text>
           <Button
             type='confirm'
             description='Confirmar'
@@ -110,6 +112,7 @@ function Register({ navigation }: any) {
 const Stack = createNativeStackNavigator();
 
 export function StackRouter() {
+
   return (
     <NavigationContainer>
       <Stack.Navigator>

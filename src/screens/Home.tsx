@@ -1,6 +1,8 @@
-import { useEffect, useRef, useState } from 'react';
-import { Dimensions, Text, View } from 'react-native';
+import { useContext, useEffect, useRef, useState } from 'react';
+import { Text, View } from 'react-native';
 import { CheckedModal, CustomModalTimer, Main, ModalComponent } from '../components';
+import { InfoContext } from '../context/infoContext';
+// import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Home() {
   const [showModal, setShowModal] = useState(false);
@@ -10,6 +12,8 @@ export default function Home() {
   const currentYear = useRef<string>();
   const currentWeek = useRef<string>();
   const [checked, setChecked ] = useState(false);
+
+  const { name } = useContext(InfoContext);
 
   useEffect(() => {
     currentDay.current = new Date().toLocaleDateString('pt-BR', {
@@ -27,13 +31,24 @@ export default function Home() {
       weekday: 'long'
     }).split(',')[0];
 
-    setLoading(false);
   }, [loading]);
+
+
+
+  useEffect(() => {
+    if (name) {
+      setLoading(false);
+    }
+  }, [name]);
 
   return (
     <Main>
       {currentWeek.current ? (
         <View className='mt-7'>
+          <View className='w-full my-4'>
+            <Text className='text-2xl text-white'>Olá,</Text>
+            <Text className='text-3xl text-white ml-4'>{name}</Text>
+          </View>
           <CustomModalTimer
             checked={checked}
             currentDay={currentDay.current}
