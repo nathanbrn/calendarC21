@@ -1,8 +1,8 @@
-import { useContext, useEffect, useRef, useState } from 'react';
+import { useCallback, useContext, useEffect, useRef, useState } from 'react';
 import { Text, View } from 'react-native';
 import { CheckedModal, CustomModalTimer, Main, ModalComponent } from '../components';
 import { InfoContext } from '../context/infoContext';
-// import AsyncStorage from '@react-native-async-storage/async-storage';
+import { formatDate } from '../utils/formatDate';
 
 export default function Home() {
   const [showModal, setShowModal] = useState(false);
@@ -12,8 +12,29 @@ export default function Home() {
   const currentYear = useRef<string>();
   const currentWeek = useRef<string>();
   const [checked, setChecked ] = useState(false);
+  const [currentDate, setCurrentDate] = useState(formatDate(new Date().toLocaleDateString('pt-BR', {
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric',
+  })));
 
-  const { name } = useContext(InfoContext);
+  const { name, setInfoChecked } = useContext(InfoContext);
+
+  const handleInfoChecked = useCallback(() => {
+    const date = new Date().toLocaleDateString('pt-BR', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+    });
+
+    return {
+      [formatDate(date)]: {
+        periods: [
+          { startingDay: false, endingDay: false, color: 'green' },
+        ]
+      },
+    };
+  }, [formatDate]);
 
   useEffect(() => {
     currentDay.current = new Date().toLocaleDateString('pt-BR', {
@@ -31,15 +52,33 @@ export default function Home() {
       weekday: 'long'
     }).split(',')[0];
 
-  }, [loading]);
-
-
-
-  useEffect(() => {
     if (name) {
       setLoading(false);
     }
-  }, [name]);
+
+    if (checked) {
+      setInfoChecked(handleInfoChecked());
+    }
+
+  }, [name, loading, checked, handleInfoChecked]);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      const today = formatDate(new Date().toLocaleDateString('pt-BR', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+      }));
+      if (today !== currentDate) {
+        setChecked(false);
+        setCurrentDate(today);
+      }
+    }, 60000);
+
+    return () => {
+      clearInterval(timer);
+    };
+  }, [currentDate]);
 
   return (
     <Main>

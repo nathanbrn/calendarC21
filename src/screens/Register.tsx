@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Feather } from '@expo/vector-icons';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -7,6 +8,7 @@ import Routes from '..';
 import { Button, Main } from '../components';
 import { InfoContext } from '../context/infoContext';
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function Initial({ navigation }: any) {
   return (
     <Main>

@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from 'react';
 import { Text, View } from 'react-native';
 import { Calendar, LocaleConfig } from 'react-native-calendars';
 import { InfoContext } from '../context/infoContext';
+import { formatDate } from '../utils/formatDate';
 
 LocaleConfig.locales['pt-br'] = {
   monthNames: [
@@ -27,21 +28,10 @@ LocaleConfig.locales['pt-br'] = {
 LocaleConfig.defaultLocale = 'pt-br';
 
 export function CalendarComponent() {
-  const today = new Date();
+  const { date, infoChecked } = useContext(InfoContext);
 
-  const { date } = useContext(InfoContext);
-  const [daySelected, setDaySelected] = useState<string>(formatDate(date));
-
-  function formatDate(date: string) {
-    const [day, month, year] = date.split('/');
-
-    const formattedDate = `${year}-${month}-${day}`;
-
-    return formattedDate;
-  }
-
-  const [markedDates, setMarkedDates] = useState({
-    [daySelected]: {
+  const [markedDates, setMarkedDates] = useState<Record<string, any>>({
+    [formatDate(date)]: {
       periods: [
         {startingDay: true, endingDay: false, color: 'green'},
         {startingDay: true, endingDay: false, color: 'orange'}
@@ -58,33 +48,70 @@ export function CalendarComponent() {
 
   // Função para atualizar as marcações dos dias
   function updateMarkedDates() {
-    const markedDatesCopy = { ...markedDates };
+    const markedDatesCopy: Record<string, any> = { ...markedDates };
 
-    // Limpar marcações anteriores
-    Object.keys(markedDatesCopy).forEach((date) => {
-      delete markedDatesCopy[date];
-    });
+    // Obter todas as chaves de marcações existentes
+    const existingDates = Object.keys(markedDatesCopy);
 
     // Marcar 21 dias a partir do dia selecionado com verde
-    const startDate = new Date(daySelected);
+    const startDate = new Date(formatDate(date));
+    const endDate = new Date(calculateFutureDate(startDate, 20)); // Último dia dos 21 dias
+
     for (let i = 0; i < 21; i++) {
-      const date = calculateFutureDate(startDate, i);
-      markedDatesCopy[date] = { periods: [{ startingDay: true, endingDay: true, color: 'orange' }] };
+      const currentDate = calculateFutureDate(startDate, i);
+
+      const startingDay = i === 0 || existingDates.includes(currentDate); // Marcar como true se for o primeiro dia ou se já estiver marcado anteriormente
+      const endingDay = currentDate === endDate.toISOString().slice(0, 10); // Definir como true para o último dia
+
+      markedDatesCopy[currentDate] = {
+        periods: [
+          { startingDay, endingDay, color: 'orange' },
+        ],
+      };
     }
 
     // Marcar 8 dias após os 21 dias com vermelho
-    const endDate = calculateFutureDate(startDate, 21);
-    for (let i = 0; i < 8; i++) {
-      const date = calculateFutureDate(new Date(endDate), i);
-      markedDatesCopy[date] = { periods: [{ startingDay: true, endingDay: true, color: 'red' }] };
+    const finalEndDate = calculateFutureDate(endDate, 8); // Último dia dos 8 dias após os 21 dias
+
+    for (let i = 1; i <= 8; i++) {
+      const currentDate = calculateFutureDate(endDate, i);
+
+      const startingDay = i === 1; // Definir como true para o primeiro dia após os 21 dias
+      const endingDay = currentDate === finalEndDate; // Definir como true para o último dia dos 8 dias após os 21 dias
+
+      markedDatesCopy[currentDate] = {
+        periods: [
+          { startingDay, endingDay, color: 'red' },
+        ],
+      };
     }
+
+    // Atualizar marcações com base no infoChecked
+    Object.entries(infoChecked).forEach(([date, { periods }]: [string, any]) => {
+      if (markedDatesCopy[date]) {
+        // Mesclar as marcações existentes com as novas marcações do infoChecked
+        markedDatesCopy[date].periods = [...markedDatesCopy[date].periods, ...periods];
+      } else {
+        markedDatesCopy[date] = { periods };
+      }
+
+      const index = Object.keys(markedDatesCopy).findIndex((key) => key === date);
+      if (index >= 0) {
+        const isStartingDay = index === 0;
+        const isEndingDay = index === Object.keys(markedDatesCopy).length - 1;
+        markedDatesCopy[date].periods[0].startingDay = isStartingDay;
+        markedDatesCopy[date].periods[0].endingDay = isEndingDay;
+      }
+    });
 
     setMarkedDates(markedDatesCopy);
   }
 
+
+
   useEffect(() => {
     updateMarkedDates();
-  }, [daySelected]);
+  }, [formatDate(date), infoChecked]);
 
   return (
     <>
