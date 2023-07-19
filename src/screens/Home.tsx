@@ -73,7 +73,7 @@ export default function Home() {
         setChecked(false);
         setCurrentDate(today);
       }
-    }, 60000);
+    }, 1000);
 
     return () => {
       clearInterval(timer);

@@ -30,14 +30,7 @@ LocaleConfig.defaultLocale = 'pt-br';
 export function CalendarComponent() {
   const { date, infoChecked } = useContext(InfoContext);
 
-  const [markedDates, setMarkedDates] = useState<Record<string, any>>({
-    [formatDate(date)]: {
-      periods: [
-        {startingDay: true, endingDay: false, color: 'green'},
-        {startingDay: true, endingDay: false, color: 'orange'}
-      ]
-    },
-  });
+  const [markedDates, setMarkedDates] = useState<Record<string, any>>({});
 
   // Função para calcular a data futura com base em uma data de referência
   function calculateFutureDate(date: Date, days: number) {
@@ -48,20 +41,17 @@ export function CalendarComponent() {
 
   // Função para atualizar as marcações dos dias
   function updateMarkedDates() {
-    const markedDatesCopy: Record<string, any> = { ...markedDates };
+    const markedDatesCopy: Record<string, any> = {};
 
-    // Obter todas as chaves de marcações existentes
-    const existingDates = Object.keys(markedDatesCopy);
-
-    // Marcar 21 dias a partir do dia selecionado com verde
+    // Marcar 21 dias a partir do dia selecionado com laranja
     const startDate = new Date(formatDate(date));
     const endDate = new Date(calculateFutureDate(startDate, 20)); // Último dia dos 21 dias
 
     for (let i = 0; i < 21; i++) {
       const currentDate = calculateFutureDate(startDate, i);
 
-      const startingDay = i === 0 || existingDates.includes(currentDate); // Marcar como true se for o primeiro dia ou se já estiver marcado anteriormente
-      const endingDay = currentDate === endDate.toISOString().slice(0, 10); // Definir como true para o último dia
+      const startingDay = i === 0;
+      const endingDay = currentDate === endDate.toISOString().slice(0, 10);
 
       markedDatesCopy[currentDate] = {
         periods: [
@@ -76,8 +66,8 @@ export function CalendarComponent() {
     for (let i = 1; i <= 8; i++) {
       const currentDate = calculateFutureDate(endDate, i);
 
-      const startingDay = i === 1; // Definir como true para o primeiro dia após os 21 dias
-      const endingDay = currentDate === finalEndDate; // Definir como true para o último dia dos 8 dias após os 21 dias
+      const startingDay = i === 1;
+      const endingDay = currentDate === finalEndDate;
 
       markedDatesCopy[currentDate] = {
         periods: [
@@ -94,24 +84,33 @@ export function CalendarComponent() {
       } else {
         markedDatesCopy[date] = { periods };
       }
-
-      const index = Object.keys(markedDatesCopy).findIndex((key) => key === date);
-      if (index >= 0) {
-        const isStartingDay = index === 0;
-        const isEndingDay = index === Object.keys(markedDatesCopy).length - 1;
-        markedDatesCopy[date].periods[0].startingDay = isStartingDay;
-        markedDatesCopy[date].periods[0].endingDay = isEndingDay;
-      }
     });
 
     setMarkedDates(markedDatesCopy);
   }
 
-
-
   useEffect(() => {
     updateMarkedDates();
-  }, [formatDate(date), infoChecked]);
+  }, [date, infoChecked]);
+
+  // Função para marcar um dia manualmente
+  function markDay(date: string) {
+    const markedDatesCopy: Record<string, any> = { ...markedDates };
+
+    if (markedDatesCopy[date]) {
+      // Remover a marcação se o dia já estiver marcado
+      delete markedDatesCopy[date];
+    } else {
+      // Marcar o dia com a cor desejada
+      markedDatesCopy[date] = {
+        periods: [
+          { startingDay: true, endingDay: false, color: 'green' },
+        ],
+      };
+    }
+
+    setMarkedDates(markedDatesCopy);
+  }
 
   return (
     <>
@@ -120,6 +119,7 @@ export function CalendarComponent() {
         minDate='2023-01-01'
         markingType="multi-period"
         markedDates={markedDates}
+        onDayPress={(day) => markDay(day.dateString)}
         renderHeader={(date) => (
           <View>
             <Text style={{ color: '#971cb7', fontSize: 16, fontWeight: 'bold' }}>

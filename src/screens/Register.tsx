@@ -101,7 +101,11 @@ function Register({ navigation }: any) {
             value={name}
             onChangeText={setName}
           />
-          <Text className='text-sm text-white text-start'>* Informe apenas o primeiro, ou no máximo até o segundo nome, ou sobrenome.</Text>
+          <View className='w-2/4 justify-start'>
+            <Text className='text-sm text-white text-start'>
+              * Informe apenas o primeiro, ou no máximo até o segundo nome, ou sobrenome.
+            </Text>
+          </View>
           <Button
             type='confirm'
             description='Confirmar'
