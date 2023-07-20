@@ -17,6 +17,7 @@ export default function Home() {
     month: '2-digit',
     year: 'numeric',
   })));
+  const [dataChecked, setDataChecked] = useState<Record<string, any>>();
 
   const { name, setInfoChecked } = useContext(InfoContext);
 
@@ -58,6 +59,7 @@ export default function Home() {
 
     if (checked) {
       setInfoChecked(handleInfoChecked());
+      setDataChecked({ ...dataChecked, ...handleInfoChecked()});
     }
 
   }, [name, loading, checked, handleInfoChecked]);
@@ -102,7 +104,7 @@ export default function Home() {
             setChecked={setChecked}
           />
 
-          <ModalComponent setShowModal={setShowModal} showModal={showModal} />
+          <ModalComponent dataChecked={dataChecked} setShowModal={setShowModal} showModal={showModal} />
         </View>
       ) : (
         <View className='flex-1 items-center justify-center'>

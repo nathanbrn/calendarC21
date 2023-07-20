@@ -27,7 +27,11 @@ LocaleConfig.locales['pt-br'] = {
 
 LocaleConfig.defaultLocale = 'pt-br';
 
-export function CalendarComponent() {
+interface Props {
+  dataChecked?: Record<string, any>;
+}
+
+export function CalendarComponent({ dataChecked }: Props) {
   const { date, infoChecked } = useContext(InfoContext);
 
   const [markedDates, setMarkedDates] = useState<Record<string, any>>({});
@@ -47,79 +51,56 @@ export function CalendarComponent() {
     const startDate = new Date(formatDate(date));
     const endDate = new Date(calculateFutureDate(startDate, 20)); // Último dia dos 21 dias
 
-    for (let i = 0; i < 21; i++) {
-      const currentDate = calculateFutureDate(startDate, i);
 
-      const startingDay = i === 0;
-      const endingDay = currentDate === endDate.toISOString().slice(0, 10);
+    for (let j = startDate.toISOString().slice(0, 10); j !== '2025-01-01'; j = calculateFutureDate(new Date(j), 1)) {
 
-      markedDatesCopy[currentDate] = {
-        periods: [
-          { startingDay, endingDay, color: 'orange' },
-        ],
-      };
-    }
 
-    // Marcar 8 dias após os 21 dias com vermelho
-    const finalEndDate = calculateFutureDate(endDate, 8); // Último dia dos 8 dias após os 21 dias
 
-    for (let i = 1; i <= 8; i++) {
-      const currentDate = calculateFutureDate(endDate, i);
+      for (let i = 0; i < 21; i++) {
+        const currentDate = calculateFutureDate(startDate, i);
 
-      const startingDay = i === 1;
-      const endingDay = currentDate === finalEndDate;
+        const startingDay = i === 0;
+        const endingDay = currentDate === endDate.toISOString().slice(0, 10);
 
-      markedDatesCopy[currentDate] = {
-        periods: [
-          { startingDay, endingDay, color: 'red' },
-        ],
-      };
-    }
-
-    // Atualizar marcações com base no infoChecked
-    Object.entries(infoChecked).forEach(([date, { periods }]: [string, any]) => {
-      if (markedDatesCopy[date]) {
-        // Mesclar as marcações existentes com as novas marcações do infoChecked
-        markedDatesCopy[date].periods = [...markedDatesCopy[date].periods, ...periods];
-      } else {
-        markedDatesCopy[date] = { periods };
+        markedDatesCopy[currentDate] = {
+          periods: [
+            { startingDay, endingDay, color: 'orange' },
+          ],
+        };
       }
-    });
 
-    setMarkedDates(markedDatesCopy);
+      // Marcar 8 dias após os 21 dias com vermelho
+      const finalEndDate = calculateFutureDate(endDate, 8); // Último dia dos 8 dias após os 21 dias
+
+      for (let i = 1; i < 8; i++) {
+        const currentDate = calculateFutureDate(endDate, i);
+
+        const startingDay = i === 1;
+        const endingDay = currentDate === finalEndDate;
+
+        markedDatesCopy[currentDate] = {
+          periods: [
+            { startingDay, endingDay, color: 'red' },
+          ],
+        };
+      }
+    }
+
+    setMarkedDates({ ...markedDatesCopy, ...dataChecked });
   }
 
   useEffect(() => {
     updateMarkedDates();
   }, [date, infoChecked]);
 
-  // Função para marcar um dia manualmente
-  function markDay(date: string) {
-    const markedDatesCopy: Record<string, any> = { ...markedDates };
-
-    if (markedDatesCopy[date]) {
-      // Remover a marcação se o dia já estiver marcado
-      delete markedDatesCopy[date];
-    } else {
-      // Marcar o dia com a cor desejada
-      markedDatesCopy[date] = {
-        periods: [
-          { startingDay: true, endingDay: false, color: 'green' },
-        ],
-      };
-    }
-
-    setMarkedDates(markedDatesCopy);
-  }
-
   return (
     <>
       <Calendar
         className='border border-Gray m-3 rounded-lg'
         minDate='2023-01-01'
+        maxDate='2024-12-31'
         markingType="multi-period"
         markedDates={markedDates}
-        onDayPress={(day) => markDay(day.dateString)}
         renderHeader={(date) => (
           <View>
             <Text style={{ color: '#971cb7', fontSize: 16, fontWeight: 'bold' }}>
