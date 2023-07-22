@@ -3,6 +3,7 @@ import { Text, View } from 'react-native';
 import { Calendar, LocaleConfig } from 'react-native-calendars';
 import { InfoContext } from '../context/infoContext';
 import { formatDate } from '../utils/formatDate';
+import ja from 'date-fns/locale/ja/index';
 
 LocaleConfig.locales['pt-br'] = {
   monthNames: [
@@ -51,40 +52,37 @@ export function CalendarComponent({ dataChecked }: Props) {
     const startDate = new Date(formatDate(date));
     const endDate = new Date(calculateFutureDate(startDate, 20)); // Último dia dos 21 dias
 
+    let j = startDate.toISOString().slice(0, 10);
 
-    for (let j = startDate.toISOString().slice(0, 10); j !== '2025-01-01'; j = calculateFutureDate(new Date(j), 1)) {
 
-
+    for (j; j !== '2025-01-01'; j = calculateFutureDate(new Date(j), 1)) {
 
       for (let i = 0; i < 21; i++) {
-        const currentDate = calculateFutureDate(startDate, i);
-
-        const startingDay = i === 0;
-        const endingDay = currentDate === endDate.toISOString().slice(0, 10);
-
-        markedDatesCopy[currentDate] = {
+        markedDatesCopy[j] = {
           periods: [
-            { startingDay, endingDay, color: 'orange' },
+            { color: 'orange' },
           ],
         };
       }
 
-      // Marcar 8 dias após os 21 dias com vermelho
-      const finalEndDate = calculateFutureDate(endDate, 8); // Último dia dos 8 dias após os 21 dias
-
-      for (let i = 1; i < 8; i++) {
-        const currentDate = calculateFutureDate(endDate, i);
-
-        const startingDay = i === 1;
-        const endingDay = currentDate === finalEndDate;
-
-        markedDatesCopy[currentDate] = {
-          periods: [
-            { startingDay, endingDay, color: 'red' },
-          ],
-        };
-      }
     }
+
+    for (j; j !== '2025-01-01'; j = calculateFutureDate(new Date(j), 1)) {
+
+
+
+      // for (let i = 1; i < 8; i++) {
+      //   const currentDate = calculateFutureDate(endDate, i);
+
+      //   markedDatesCopy[currentDate] = {
+      //     periods: [
+      //       { color: 'red' },
+      //     ],
+      //   };
+      // }
+
+    }
+
 
     setMarkedDates({ ...markedDatesCopy, ...dataChecked });
   }
