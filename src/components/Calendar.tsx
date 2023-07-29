@@ -3,7 +3,6 @@ import { Text, View } from 'react-native';
 import { Calendar, LocaleConfig } from 'react-native-calendars';
 import { InfoContext } from '../context/infoContext';
 import { formatDate } from '../utils/formatDate';
-import ja from 'date-fns/locale/ja/index';
 
 LocaleConfig.locales['pt-br'] = {
   monthNames: [
@@ -50,39 +49,36 @@ export function CalendarComponent({ dataChecked }: Props) {
 
     // Marcar 21 dias a partir do dia selecionado com laranja
     const startDate = new Date(formatDate(date));
-    const endDate = new Date(calculateFutureDate(startDate, 20)); // Último dia dos 21 dias
 
     let j = startDate.toISOString().slice(0, 10);
 
+    let i = 1;
+    let cor = 'orange';
+    let step_a = 21;
+    const step_b = 7;
 
     for (j; j !== '2025-01-01'; j = calculateFutureDate(new Date(j), 1)) {
 
-      for (let i = 0; i < 21; i++) {
-        markedDatesCopy[j] = {
-          periods: [
-            { color: 'orange' },
-          ],
-        };
+      const x = i % step_a;
+
+      if(x == 0){
+        step_a = 21 + step_a + step_b;
+        cor = 'red';
       }
 
+      const y = i % (step_b + 21);
+
+      if(y == 0)
+        cor = 'orange';
+
+      markedDatesCopy[j] = {
+        periods: [
+          { color: cor },
+        ],
+      };
+
+      i += 1;
     }
-
-    for (j; j !== '2025-01-01'; j = calculateFutureDate(new Date(j), 1)) {
-
-
-
-      // for (let i = 1; i < 8; i++) {
-      //   const currentDate = calculateFutureDate(endDate, i);
-
-      //   markedDatesCopy[currentDate] = {
-      //     periods: [
-      //       { color: 'red' },
-      //     ],
-      //   };
-      // }
-
-    }
-
 
     setMarkedDates({ ...markedDatesCopy, ...dataChecked });
   }
