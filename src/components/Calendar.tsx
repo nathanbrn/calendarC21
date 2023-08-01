@@ -32,9 +32,7 @@ interface Props {
 }
 
 export function CalendarComponent({ dataChecked }: Props) {
-  const { date, infoChecked } = useContext(InfoContext);
-
-  const [markedDates, setMarkedDates] = useState<Record<string, any>>({});
+  const { date, infoChecked, markedDates, setMarkedDates } = useContext(InfoContext);
 
   // Função para calcular a data futura com base em uma data de referência
   function calculateFutureDate(date: Date, days: number) {

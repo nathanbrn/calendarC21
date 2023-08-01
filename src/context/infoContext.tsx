@@ -11,6 +11,7 @@ export const InfoProvider = ({ children }: InfoProviderProps) => {
   const [name, setName] = useState<string>('');
   const [date, setDate] = useState<string>('');
   const [infoChecked, setInfoChecked] = useState({});
+  const [markedDates, setMarkedDates] = useState<Record<string, any>>({});
 
   return (
     <InfoContext.Provider value={{
@@ -19,7 +20,9 @@ export const InfoProvider = ({ children }: InfoProviderProps) => {
       infoChecked,
       setName,
       setDate,
-      setInfoChecked
+      setInfoChecked,
+      markedDates,
+      setMarkedDates
     }}>
       {children}
     </InfoContext.Provider>
