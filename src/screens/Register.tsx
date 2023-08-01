@@ -2,7 +2,7 @@
 import { Feather } from '@expo/vector-icons';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { useContext, useState } from 'react';
+import { useContext, useLayoutEffect, useState } from 'react';
 import { Modal, Text, TextInput, View } from 'react-native';
 import Routes from '..';
 import { Button, Main } from '../components';
@@ -10,15 +10,26 @@ import { InfoContext } from '../context/infoContext';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function Initial({ navigation }: any) {
+
+  const { name, date } = useContext(InfoContext);
+
+  useLayoutEffect(() => {
+    if (name && date) {
+      navigation.navigate('home');
+    }
+  }, [name, date, navigation]);
+
   return (
     <Main>
       <View className='flex-1 items-center justify-center'>
         <Text className='text-4xl text-gray-200 font-bold mb-4'>Bem vindo!</Text>
-        <Button
-          type='confirm'
-          description='Começar'
-          onClick={() => navigation.navigate('register')}
-        />
+        {(!name && !date) && (
+          <Button
+            type='confirm'
+            description='Começar'
+            onClick={() => navigation.navigate('register')}
+          />
+        )}
       </View>
     </Main>
   );
