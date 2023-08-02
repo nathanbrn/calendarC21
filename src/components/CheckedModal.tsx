@@ -11,7 +11,7 @@ interface CheckedModalProps {
 
 export function CheckedModal({ checked, setChecked }: CheckedModalProps) {
   const currentDay = new Date().toISOString().slice(0, 10);
-  const { markedDates } = useContext(InfoContext);
+  const { markedDates, infoChecked } = useContext(InfoContext);
 
   if (markedDates[currentDay] && markedDates[currentDay]['periods'][0]['color'] === 'red') {
     return (

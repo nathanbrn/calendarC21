@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect } from 'react';
 import { Text, View } from 'react-native';
 import { Calendar, LocaleConfig } from 'react-native-calendars';
 import { InfoContext } from '../context/infoContext';
@@ -32,7 +32,7 @@ interface Props {
 }
 
 export function CalendarComponent({ dataChecked }: Props) {
-  const { date, infoChecked, markedDates, setMarkedDates } = useContext(InfoContext);
+  const { date, infoChecked, setInfoChecked, markedDates, setMarkedDates } = useContext(InfoContext);
 
   // Função para calcular a data futura com base em uma data de referência
   function calculateFutureDate(date: Date, days: number) {
@@ -78,7 +78,7 @@ export function CalendarComponent({ dataChecked }: Props) {
       i += 1;
     }
 
-    setMarkedDates({ ...markedDatesCopy, ...dataChecked });
+    setMarkedDates({ ...markedDatesCopy, ...infoChecked });
   }
 
   useEffect(() => {

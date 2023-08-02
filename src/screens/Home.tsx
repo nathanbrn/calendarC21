@@ -19,7 +19,17 @@ export default function Home() {
   })));
   const [dataChecked, setDataChecked] = useState<Record<string, any>>();
 
-  const { name, setInfoChecked } = useContext(InfoContext);
+  const { name, infoChecked, setInfoChecked } = useContext(InfoContext);
+
+  useEffect(() => {
+    const auxCurrent = new Date().toISOString().slice(0, 10);
+    const infoCheckedKeys = Object.keys(infoChecked);
+    const check = infoCheckedKeys.includes(auxCurrent);
+
+    if (check) {
+      setChecked(true);
+    }
+  }, [infoChecked]);
 
   const handleInfoChecked = useCallback(() => {
     const date = new Date().toLocaleDateString('pt-BR', {
@@ -58,8 +68,8 @@ export default function Home() {
     }
 
     if (checked) {
-      setInfoChecked(handleInfoChecked());
-      setDataChecked({ ...dataChecked, ...handleInfoChecked()});
+      setInfoChecked((prevInfoChecked: any) => ({ ...prevInfoChecked, ...handleInfoChecked() }));
+      setDataChecked({ ...dataChecked, ...handleInfoChecked() });
     }
 
   }, [name, loading, checked, handleInfoChecked]);
