@@ -76,8 +76,6 @@ export const InfoProvider = ({ children }: InfoProviderProps) => {
   //   })();
   // }, []);
 
-  console.log(infoChecked);
-
   return (
     <InfoContext.Provider value={{
       name,
