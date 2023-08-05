@@ -1,8 +1,22 @@
+import {
+  setNotificationHandler,
+  requestPermissionsAsync,
+  getExpoPushTokenAsync,
+  scheduleNotificationAsync,
+} from 'expo-notifications';
 import { useCallback, useContext, useEffect, useRef, useState } from 'react';
 import { Text, View } from 'react-native';
 import { CheckedModal, CustomModalTimer, Main, ModalComponent } from '../components';
 import { InfoContext } from '../context/infoContext';
 import { formatDate } from '../utils/formatDate';
+
+setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: true,
+    shouldSetBadge: true,
+  }),
+});
 
 export default function Home() {
   const [showModal, setShowModal] = useState(false);
@@ -18,6 +32,7 @@ export default function Home() {
     year: 'numeric',
   })));
   const [dataChecked, setDataChecked] = useState<Record<string, any>>();
+  const [notificationId, setNotificationId] = useState<string | undefined>(undefined);
 
   const { name, infoChecked, setInfoChecked } = useContext(InfoContext);
 
@@ -90,6 +105,37 @@ export default function Home() {
     return () => {
       clearInterval(timer);
     };
+  }, [currentDate]);
+
+  useEffect(() => {
+    (async () => {
+      const { status } = await requestPermissionsAsync();
+      const token = (await getExpoPushTokenAsync()).data;
+
+      setNotificationId(token);
+
+      if (status !== 'granted') {
+        alert('Precisamos de permissão para enviar notificações.');
+        return;
+      }
+    })();
+  }, []);
+
+  async function schedulePushNotification() {
+    await scheduleNotificationAsync({
+      content: {
+        title: 'Já tomou seu remédio hoje? 🤔',
+        body: 'Não esqueça de registrar, caso não tenha tomado, aproveite a oportunidade de não gerar uma vida no momento 😇',
+      },
+      trigger: {
+        channelId: notificationId,
+        date: new Date(`${currentDate}T10:00:00`),
+      },
+    });
+  }
+
+  useEffect(() => {
+    schedulePushNotification();
   }, [currentDate]);
 
   return (
