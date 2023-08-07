@@ -34,7 +34,7 @@ export default function Home() {
   const [dataChecked, setDataChecked] = useState<Record<string, any>>();
   const [notificationId, setNotificationId] = useState<string | undefined>(undefined);
 
-  const { name, infoChecked, setInfoChecked } = useContext(InfoContext);
+  const { name, hour, infoChecked, setInfoChecked } = useContext(InfoContext);
 
   useEffect(() => {
     const auxCurrent = new Date().toISOString().slice(0, 10);
@@ -133,7 +133,7 @@ export default function Home() {
       },
       trigger: {
         channelId: notificationId,
-        date: new Date(`${currentDate}T10:00:00`),
+        date: new Date(`${currentDate}${hour}`),
       },
     });
   }

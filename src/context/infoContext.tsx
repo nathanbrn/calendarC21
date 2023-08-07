@@ -80,6 +80,7 @@ export const InfoProvider = ({ children }: InfoProviderProps) => {
   //     await AsyncStorage.removeItem('@avoidchild:infoChecked');
   //     await AsyncStorage.removeItem('@avoidchild:name');
   //     await AsyncStorage.removeItem('@avoidchild:date');
+  //     await AsyncStorage.removeItem('@avoidchild:hour');
   //   })();
   // }, []);
 
