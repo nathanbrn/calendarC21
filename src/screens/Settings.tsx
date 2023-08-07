@@ -13,7 +13,7 @@ export default function Settings() {
 
   const navigation = useNavigation();
 
-  const { setInfoChecked, setName, setDate } = useContext(InfoContext);
+  const { setInfoChecked, setName, setDate, setHour } = useContext(InfoContext);
 
   function handleDelete() {
     isModalVisible ? setModalVisible(false) : setModalVisible(true);
@@ -25,11 +25,12 @@ export default function Settings() {
     setInfoChecked({});
     setName('');
     setDate('');
+    setHour('');
 
     handleDeleteData();
 
     alert('Dados apagados com sucesso!');
-    
+
     navigation.navigate('initial');
   }
 
