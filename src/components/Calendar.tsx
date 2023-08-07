@@ -41,19 +41,25 @@ export function CalendarComponent({ dataChecked }: Props) {
     return futureDate.toISOString().slice(0, 10);
   }
 
-  // Função para atualizar as marcações dos dias
   function updateMarkedDates() {
     const markedDatesCopy: Record<string, any> = {};
+    const markedStartDate: Record<string, any> = {};
 
-    // Marcar 21 dias a partir do dia selecionado com laranja
     const startDate = new Date(formatDate(date));
+    const OneDayAfter = calculateFutureDate(startDate, 1);
 
-    let j = startDate.toISOString().slice(0, 10);
+    let j = OneDayAfter;
 
     let i = 1;
     let cor = 'orange';
     let step_a = 21;
     const step_b = 7;
+
+    markedStartDate[startDate.toISOString().slice(0, 10)] = {
+      periods: [
+        { color: 'orange' },
+      ],
+    };
 
     for (j; j !== '2025-01-01'; j = calculateFutureDate(new Date(j), 1)) {
 
@@ -78,7 +84,7 @@ export function CalendarComponent({ dataChecked }: Props) {
       i += 1;
     }
 
-    setMarkedDates({ ...markedDatesCopy, ...infoChecked });
+    setMarkedDates({ ...markedStartDate, ...markedDatesCopy, ...infoChecked });
   }
 
   useEffect(() => {

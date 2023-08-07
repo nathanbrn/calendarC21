@@ -1,8 +1,8 @@
 import {
-  setNotificationHandler,
-  requestPermissionsAsync,
   getExpoPushTokenAsync,
+  requestPermissionsAsync,
   scheduleNotificationAsync,
+  setNotificationHandler,
 } from 'expo-notifications';
 import { useCallback, useContext, useEffect, useRef, useState } from 'react';
 import { Text, View } from 'react-native';

@@ -41,6 +41,7 @@ function Register({ navigation }: any) {
 
   const [primaryModalVisible, setPrimaryModalVisible] = useState(true);
   const [secondaryModalVisible, setSecondaryModalVisible] = useState(false);
+  const [tertiaryModalVisible, setTertiaryModalVisible] = useState(false);
 
   function formatDate(date: string) {
     const dateRegex = /^(\d{2})(\d{2})(\d{4})$/;
@@ -78,7 +79,7 @@ function Register({ navigation }: any) {
             description='Confirmar'
             onClick={() => {
               setSecondaryModalVisible(false);
-              navigation.navigate('home');
+              setTertiaryModalVisible(true);
             }}
           />
           <View className='absolute bottom-8'>
@@ -123,6 +124,35 @@ function Register({ navigation }: any) {
             onClick={() => {
               setPrimaryModalVisible(false);
               setSecondaryModalVisible(true);
+            }}
+          />
+        </View>
+      </Modal>
+
+      <Modal
+        transparent
+        visible={tertiaryModalVisible}
+        animationType='slide'
+      >
+        <View className='flex-1 items-center justify-center'>
+          <Text className='text-2xl text-gray-200 font-bold '>Informe seu nome</Text>
+          <TextInput
+            className='bg-gray-300 w-2/4 h-12 rounded-lg mt-4 px-4'
+            placeholder='Insira seu nome...'
+            value={name}
+            onChangeText={setName}
+          />
+          <View className='w-2/4 justify-start'>
+            <Text className='text-sm text-white text-start'>
+              * Informe apenas o primeiro, ou no máximo até o segundo nome, ou sobrenome.
+            </Text>
+          </View>
+          <Button
+            type='confirm'
+            description='Confirmar'
+            onClick={() => {
+              setTertiaryModalVisible(false);
+              navigation.navigate('home');
             }}
           />
         </View>

@@ -11,6 +11,7 @@ interface InfoProviderProps {
 export const InfoProvider = ({ children }: InfoProviderProps) => {
   const [name, setName] = useState<string>('');
   const [date, setDate] = useState<string>('');
+  const [hour, setHour] = useState<string>('');
   const [infoChecked, setInfoChecked] = useState({});
   const [markedDates, setMarkedDates] = useState<Record<string, any>>({});
 
@@ -19,6 +20,7 @@ export const InfoProvider = ({ children }: InfoProviderProps) => {
       try {
         const name = await AsyncStorage.getItem('@avoidchild:name');
         const date = await AsyncStorage.getItem('@avoidchild:date');
+        const hour = await AsyncStorage.getItem('@avoidchild:hour');
 
         if (name) {
           setName(name);
@@ -26,6 +28,10 @@ export const InfoProvider = ({ children }: InfoProviderProps) => {
 
         if (date) {
           setDate(date);
+        }
+
+        if (hour) {
+          setHour(hour);
         }
       } catch (error) {
         console.log(error);
@@ -38,11 +44,12 @@ export const InfoProvider = ({ children }: InfoProviderProps) => {
       try {
         await AsyncStorage.setItem('@avoidchild:name', name);
         await AsyncStorage.setItem('@avoidchild:date', date);
+        await AsyncStorage.setItem('@avoidchild:hour', hour);
       } catch (error) {
         console.log(error);
       }
     })();
-  }, [name, date]);
+  }, [name, date, hour]);
 
   useEffect(() => {
     (async () => {
@@ -80,9 +87,11 @@ export const InfoProvider = ({ children }: InfoProviderProps) => {
     <InfoContext.Provider value={{
       name,
       date,
+      hour,
       infoChecked,
       setName,
       setDate,
+      setHour,
       setInfoChecked,
       markedDates,
       setMarkedDates
