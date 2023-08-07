@@ -19,6 +19,10 @@
       "bundleIdentifier": "."
     },
     "android": {
+      "useNextNotificationsApi": true,
+      "permissions": [
+        "NOTIFICATIONS"
+      ],
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#971cb7"

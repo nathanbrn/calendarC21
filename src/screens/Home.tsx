@@ -109,14 +109,18 @@ export default function Home() {
 
   useEffect(() => {
     (async () => {
-      const { status } = await requestPermissionsAsync();
-      const token = (await getExpoPushTokenAsync()).data;
+      try {
+        const { status } = await requestPermissionsAsync();
+        const token = (await getExpoPushTokenAsync()).data;
 
-      setNotificationId(token);
+        setNotificationId(token);
 
-      if (status !== 'granted') {
-        alert('Precisamos de permissão para enviar notificações.');
-        return;
+        if (status !== 'granted') {
+          alert('Precisamos de permissão para enviar notificações.');
+          return;
+        }
+      } catch (error) {
+        console.log(error);
       }
     })();
   }, []);
