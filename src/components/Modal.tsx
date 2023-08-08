@@ -6,10 +6,9 @@ import { CalendarComponent } from './Calendar';
 interface ModalProps {
   showModal: boolean;
   setShowModal: (showModal: boolean) => void;
-  dataChecked?: Record<string, any>;
 }
 
-export function ModalComponent({ showModal, setShowModal, dataChecked }: ModalProps) {
+export function ModalComponent({ showModal, setShowModal }: ModalProps) {
   const heightWindow = Dimensions.get('window').height;
   const heightScreen = Dimensions.get('screen').height;
   let styles;
@@ -44,7 +43,7 @@ export function ModalComponent({ showModal, setShowModal, dataChecked }: ModalPr
           }}
         />
         <View className='mt-2 mb-10'>
-          <CalendarComponent dataChecked={ dataChecked } />
+          <CalendarComponent />
         </View>
         <View
           style={styles?.containerSubtitle}

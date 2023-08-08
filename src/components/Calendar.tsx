@@ -3,6 +3,7 @@ import { Text, View } from 'react-native';
 import { Calendar, LocaleConfig } from 'react-native-calendars';
 import { InfoContext } from '../context/infoContext';
 import { formatDate } from '../utils/formatDate';
+import { MarkedDate } from '../@types/calendar.props';
 
 LocaleConfig.locales['pt-br'] = {
   monthNames: [
@@ -27,12 +28,8 @@ LocaleConfig.locales['pt-br'] = {
 
 LocaleConfig.defaultLocale = 'pt-br';
 
-interface Props {
-  dataChecked?: Record<string, any>;
-}
-
-export function CalendarComponent({ dataChecked }: Props) {
-  const { date, infoChecked, setInfoChecked, markedDates, setMarkedDates } = useContext(InfoContext);
+export function CalendarComponent() {
+  const { date, infoChecked, markedDates, setMarkedDates } = useContext(InfoContext);
 
   // Função para calcular a data futura com base em uma data de referência
   function calculateFutureDate(date: Date, days: number) {
@@ -42,8 +39,8 @@ export function CalendarComponent({ dataChecked }: Props) {
   }
 
   function updateMarkedDates() {
-    const markedDatesCopy: Record<string, any> = {};
-    const markedStartDate: Record<string, any> = {};
+    const markedDatesCopy: Record<string, MarkedDate> = {};
+    const markedStartDate: Record<string, MarkedDate> = {};
 
     const startDate = new Date(formatDate(date));
     const OneDayAfter = calculateFutureDate(startDate, 1);

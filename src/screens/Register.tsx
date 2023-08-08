@@ -3,7 +3,7 @@ import { Feather } from '@expo/vector-icons';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Select } from 'native-base';
-import { useContext, useLayoutEffect, useState } from 'react';
+import { useContext, useLayoutEffect, useRef, useState } from 'react';
 import { Modal, Text, TextInput, View } from 'react-native';
 import Routes from '..';
 import { Button, Main } from '../components';
@@ -36,13 +36,40 @@ function Initial({ navigation }: any) {
   );
 }
 
-function Register({ navigation }: any) {
+function Register() {
 
   const { name, date, hour, setName, setDate, setHour } = useContext(InfoContext);
 
   const [primaryModalVisible, setPrimaryModalVisible] = useState(true);
   const [secondaryModalVisible, setSecondaryModalVisible] = useState(false);
   const [tertiaryModalVisible, setTertiaryModalVisible] = useState(false);
+
+  const horarios = useRef([
+    '00',
+    '01',
+    '02',
+    '03',
+    '04',
+    '05',
+    '06',
+    '07',
+    '08',
+    '09',
+    '10',
+    '11',
+    '12',
+    '13',
+    '14',
+    '15',
+    '16',
+    '17',
+    '18',
+    '19',
+    '20',
+    '21',
+    '22',
+    '23'
+  ]);
 
   function formatDate(date: string) {
     const dateRegex = /^(\d{2})(\d{2})(\d{4})$/;
@@ -141,7 +168,7 @@ function Register({ navigation }: any) {
         animationType='slide'
       >
         <View className='flex-1 items-center justify-center'>
-          <Text className='text-2xl text-gray-200 font-bold '>Informe seu nome</Text>
+          <Text className='text-2xl text-gray-200 font-bold '>Informe o horário de lembrete</Text>
           <View className='flex-row items-center gap-1 mt-4 mb-2 p-2 mr-6'>
             <Feather name='clock' size={32} color='rgb(209,213,219)' />
             <Select
@@ -149,36 +176,22 @@ function Register({ navigation }: any) {
               accessibilityLabel='Selecione o horário'
               placeholder='Selecione o horário'
               _selectedItem={{
-                bg: 'cyan.600',
+                bg: 'purple.600',
                 endIcon: <Feather name='check-circle' size={24} color='rgb(209,213,219)' />,
+                borderRadius: 8,
               }}
               mt={1}
               onValueChange={itemValue => handleTimeChange(itemValue)}
+              ml={2}
+              w={56}
+              color={hour ? 'white' : 'gray.300'}
+              fontSize={16}
+              dropdownIcon={<Feather style={{
+              }} name='chevron-down' size={32} color='rgb(209,213,219)' />}
             >
-              <Select.Item label='0h' value='T10:00:00' />
-              <Select.Item label='1h' value='T01:00:00' />
-              <Select.Item label='2h' value='T02:00:00' />
-              <Select.Item label='3h' value='T03:00:00' />
-              <Select.Item label='4h' value='T04:00:00' />
-              <Select.Item label='5h' value='T05:00:00' />
-              <Select.Item label='6h' value='T06:00:00' />
-              <Select.Item label='7h' value='T07:00:00' />
-              <Select.Item label='8h' value='T08:00:00' />
-              <Select.Item label='9h' value='T09:00:00' />
-              <Select.Item label='10h' value='T10:00:00' />
-              <Select.Item label='11h' value='T11:00:00' />
-              <Select.Item label='12h' value='T12:00:00' />
-              <Select.Item label='13h' value='T13:00:00' />
-              <Select.Item label='14h' value='T14:00:00' />
-              <Select.Item label='15h' value='T15:00:00' />
-              <Select.Item label='16h' value='T16:00:00' />
-              <Select.Item label='17h' value='T17:00:00' />
-              <Select.Item label='18h' value='T18:00:00' />
-              <Select.Item label='19h' value='T19:00:00' />
-              <Select.Item label='20h' value='T20:00:00' />
-              <Select.Item label='21h' value='T21:00:00' />
-              <Select.Item label='22h' value='T22:00:00' />
-              <Select.Item label='23h' value='T23:00:00' />
+              {horarios.current.map((horario, index) => (
+                <Select.Item key={index} label={`${horario} horas`} value={`T${horario}:00:00`} />
+              ))}
             </Select>
           </View>
         </View>

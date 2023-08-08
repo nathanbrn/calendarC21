@@ -36,8 +36,10 @@ export default function Settings() {
 
   return (
     <Main>
+
       <View className='mb-2 mt-6 items-center justify-center'>
-        <Text className='text-xl font-bold text-white'>Tema</Text>
+        <Text className='text-white underline'>Configuração não aplicada</Text>
+        <Text className='line-through text-xl font-bold text-white'>Tema</Text>
       </View>
       <View className='flex-row items-center justify-center gap-1'>
         <Button
@@ -58,7 +60,8 @@ export default function Settings() {
           onClick={() => setIsEnabled(true)}
         />
       </View>
-      <View>
+
+      <View className='mt-12'>
         <Button
           type='confirm'
           description='Apagar dados'

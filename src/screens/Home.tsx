@@ -9,6 +9,7 @@ import { Text, View } from 'react-native';
 import { CheckedModal, CustomModalTimer, Main, ModalComponent } from '../components';
 import { InfoContext } from '../context/infoContext';
 import { formatDate } from '../utils/formatDate';
+import { MarkedDate } from '../@types/calendar.props';
 
 setNotificationHandler({
   handleNotification: async () => ({
@@ -31,7 +32,7 @@ export default function Home() {
     month: '2-digit',
     year: 'numeric',
   })));
-  const [dataChecked, setDataChecked] = useState<Record<string, any>>();
+  const [dataChecked, setDataChecked] = useState<Record<string, MarkedDate>>();
   const [notificationId, setNotificationId] = useState<string | undefined>(undefined);
 
   const { name, hour, infoChecked, setInfoChecked } = useContext(InfoContext);
@@ -83,7 +84,7 @@ export default function Home() {
     }
 
     if (checked) {
-      setInfoChecked((prevInfoChecked: any) => ({ ...prevInfoChecked, ...handleInfoChecked() }));
+      setInfoChecked((prevInfoChecked: MarkedDate) => ({ ...prevInfoChecked, ...handleInfoChecked() }));
       setDataChecked({ ...dataChecked, ...handleInfoChecked() });
     }
 
@@ -164,7 +165,7 @@ export default function Home() {
             setChecked={setChecked}
           />
 
-          <ModalComponent dataChecked={dataChecked} setShowModal={setShowModal} showModal={showModal} />
+          <ModalComponent setShowModal={setShowModal} showModal={showModal} />
         </View>
       ) : (
         <View className='flex-1 items-center justify-center'>

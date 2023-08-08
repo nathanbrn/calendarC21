@@ -1,5 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ReactNode, createContext, useEffect, useState } from 'react';
+import { MarkedDate } from '../@types/calendar.props';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const InfoContext = createContext<any>({});
@@ -13,7 +14,7 @@ export const InfoProvider = ({ children }: InfoProviderProps) => {
   const [date, setDate] = useState<string>('');
   const [hour, setHour] = useState<string>('');
   const [infoChecked, setInfoChecked] = useState({});
-  const [markedDates, setMarkedDates] = useState<Record<string, any>>({});
+  const [markedDates, setMarkedDates] = useState<Record<string, MarkedDate>>({});
 
   useEffect(() => {
     (async () => {
