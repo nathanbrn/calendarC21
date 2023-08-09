@@ -16,65 +16,65 @@ export const InfoProvider = ({ children }: InfoProviderProps) => {
   const [infoChecked, setInfoChecked] = useState({});
   const [markedDates, setMarkedDates] = useState<Record<string, MarkedDate>>({});
 
-  useEffect(() => {
-    (async () => {
-      try {
-        const name = await AsyncStorage.getItem('@avoidchild:name');
-        const date = await AsyncStorage.getItem('@avoidchild:date');
-        const hour = await AsyncStorage.getItem('@avoidchild:hour');
+  // useEffect(() => {
+  //   (async () => {
+  //     try {
+  //       const name = await AsyncStorage.getItem('@avoidchild:name');
+  //       const date = await AsyncStorage.getItem('@avoidchild:date');
+  //       const hour = await AsyncStorage.getItem('@avoidchild:hour');
 
-        if (name) {
-          setName(name);
-        }
+  //       if (name) {
+  //         setName(name);
+  //       }
 
-        if (date) {
-          setDate(date);
-        }
+  //       if (date) {
+  //         setDate(date);
+  //       }
 
-        if (hour) {
-          setHour(hour);
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    })();
-  }, []);
+  //       if (hour) {
+  //         setHour(hour);
+  //       }
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   })();
+  // }, []);
 
-  useEffect(() => {
-    (async () => {
-      try {
-        await AsyncStorage.setItem('@avoidchild:name', name);
-        await AsyncStorage.setItem('@avoidchild:date', date);
-        await AsyncStorage.setItem('@avoidchild:hour', hour);
-      } catch (error) {
-        console.log(error);
-      }
-    })();
-  }, [name, date, hour]);
+  // useEffect(() => {
+  //   (async () => {
+  //     try {
+  //       await AsyncStorage.setItem('@avoidchild:name', name);
+  //       await AsyncStorage.setItem('@avoidchild:date', date);
+  //       await AsyncStorage.setItem('@avoidchild:hour', hour);
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   })();
+  // }, [name, date, hour]);
 
-  useEffect(() => {
-    (async () => {
-      try {
-        const infoChecked = await AsyncStorage.getItem('@avoidchild:infoChecked');
+  // useEffect(() => {
+  //   (async () => {
+  //     try {
+  //       const infoChecked = await AsyncStorage.getItem('@avoidchild:infoChecked');
 
-        if (infoChecked) {
-          setInfoChecked(JSON.parse(infoChecked));
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    })();
-  }, []);
+  //       if (infoChecked) {
+  //         setInfoChecked(JSON.parse(infoChecked));
+  //       }
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   })();
+  // }, []);
 
-  useEffect(() => {
-    (async () => {
-      try {
-        await AsyncStorage.setItem('@avoidchild:infoChecked', JSON.stringify(infoChecked));
-      } catch (error) {
-        console.log(error);
-      }
-    })();
-  }, [infoChecked]);
+  // useEffect(() => {
+  //   (async () => {
+  //     try {
+  //       await AsyncStorage.setItem('@avoidchild:infoChecked', JSON.stringify(infoChecked));
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   })();
+  // }, [infoChecked]);
 
   // useEffect(() => {
   //   (async () => {

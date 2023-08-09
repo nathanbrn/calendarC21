@@ -10,6 +10,7 @@ import { CheckedModal, CustomModalTimer, Main, ModalComponent } from '../compone
 import { InfoContext } from '../context/infoContext';
 import { formatDate } from '../utils/formatDate';
 import { MarkedDate } from '../@types/calendar.props';
+import { TesteDateTimePicker } from '../components/TesteDateTimePicker';
 
 setNotificationHandler({
   handleNotification: async () => ({
@@ -172,6 +173,7 @@ export default function Home() {
           <Text className='text-white text-2xl'>Carregando...</Text>
         </View>
       )}
+      <TesteDateTimePicker type='time' />
     </Main>
   );
 }
