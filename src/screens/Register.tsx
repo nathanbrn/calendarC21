@@ -4,7 +4,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useContext, useLayoutEffect, useRef, useState } from 'react';
 import { Modal, Text, TextInput, View } from 'react-native';
 import Routes from '..';
-import { Button, Main, DateTimePickerComponent } from '../components';
+import { Button, DateTimePickerComponent, Main } from '../components';
 import { InfoContext } from '../context/infoContext';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -142,7 +142,7 @@ function Register() {
       >
         <View className='flex-1 items-center justify-center'>
           <Text className='text-2xl text-gray-200 font-bold '>Informe o horário de lembrete</Text>
-          <View className='flex-row items-center gap-1 mt-4 mb-2 p-2 mr-6'>
+          <View className='flex-row items-center gap-1 mt-4 mb-2 p-2'>
             <DateTimePickerComponent setSecondaryModalVisible={setSecondaryModalVisible} setTertiaryModalVisible={setTertiaryModalVisible} type='time' />
           </View>
         </View>

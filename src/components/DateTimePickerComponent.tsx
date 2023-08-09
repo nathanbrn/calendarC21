@@ -3,7 +3,7 @@ import DateTimePicker, { DateTimePickerEvent } from '@react-native-community/dat
 import { useContext, useState } from 'react';
 import { View } from 'react-native';
 import { InfoContext } from '../context/infoContext';
-import { Button } from './';
+import { Button } from './Button';
 
 type AndroidMode = 'date' | 'time' | 'datetime' | 'countdown';
 
@@ -22,6 +22,11 @@ export const DateTimePickerComponent = ({ type, setSecondaryModalVisible, setTer
   const { setHour, setDate } = useContext(InfoContext);
 
   const onChange = (event: DateTimePickerEvent, selectedDate: Date | undefined) => {
+    if (event.type === 'dismissed') {
+      setShow(false);
+      return;
+    }
+
     const currentDate = selectedDate;
     setShow(false);
 

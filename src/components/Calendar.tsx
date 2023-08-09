@@ -1,6 +1,7 @@
 import { useContext, useEffect } from 'react';
 import { Text, View } from 'react-native';
 import { Calendar, LocaleConfig } from 'react-native-calendars';
+import { MarkedDates } from 'react-native-calendars/src/types';
 import { MarkedDate } from '../@types/calendar.props';
 import { InfoContext } from '../context/infoContext';
 import { formatDate } from '../utils/formatDate';
@@ -29,7 +30,7 @@ LocaleConfig.locales['pt-br'] = {
 LocaleConfig.defaultLocale = 'pt-br';
 
 export function CalendarComponent() {
-  const { date, infoChecked, markedDates, setMarkedDates } = useContext(InfoContext);
+  const { date, infoChecked, setInfoChecked, markedDates, setMarkedDates } = useContext(InfoContext);
 
   function calculateFutureDate(date: Date, days: number) {
     const futureDate = new Date(date);
@@ -90,6 +91,25 @@ export function CalendarComponent() {
   return (
     <>
       <Calendar
+        onDayPress={(day) => {
+          const dayString = day.dateString;
+          setInfoChecked((prevState: Record<string, MarkedDates>) => {
+            if (markedDates[dayString]?.periods[0]?.color === 'red') {
+              // Não faça nada se o dia já estiver marcado como vermelho
+              return { ...prevState };
+            }
+
+            if (prevState[dayString]) {
+              const { [dayString]: value, ...rest } = prevState;
+              return rest;
+            }
+            return { ...prevState, [dayString]: {
+              periods: [
+                { color: 'green'}
+              ]
+            } };
+          });
+        }}
         className='border border-Gray m-3 rounded-lg'
         minDate='2023-01-01'
         maxDate='2024-12-31'

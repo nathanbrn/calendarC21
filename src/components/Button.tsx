@@ -1,4 +1,3 @@
-import { Feather } from '@expo/vector-icons';
 import { Text, TouchableOpacity } from 'react-native';
 
 interface ButtonProps {
@@ -49,10 +48,10 @@ export function Button({ description, onClick, icon, type }: ButtonProps) {
     return (
       <TouchableOpacity
         onPress={onClick}
-        className='flex-col mx-auto mb-1 bg-Blue py-3 px-6 rounded-lg mt-4 items-center justify-center'>
+        className='flex-col border border-white bg-purple-600 mx-auto mb-1 bg-Blue py-3 px-6 rounded-lg mt-4 items-center justify-center'>
         { icon && <Text className='text-white text-xl font-bold'>{icon}</Text>}
         { description && <Text className='text-white text-center font-bold'>
-            Clique aqui
+            Pressione-me
         </Text>}
       </TouchableOpacity>
     );
@@ -60,10 +59,10 @@ export function Button({ description, onClick, icon, type }: ButtonProps) {
     return (
       <TouchableOpacity
         onPress={onClick}
-        className='flex-col mx-auto mb-1 bg-Blue py-3 px-6 rounded-lg mt-4 items-center justify-center'>
+        className='flex-col border border-white bg-purple-600 mx-auto mb-1 bg-Blue py-3 px-6 rounded-lg mt-4 items-center justify-center'>
         { icon && <Text className='text-white text-xl font-bold'>{icon}</Text>}
         { description && <Text className='text-white text-center font-bold'>
-            Clique aqui
+            Pressione-me
         </Text>}
       </TouchableOpacity>
     );

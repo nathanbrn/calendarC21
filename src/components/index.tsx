@@ -7,5 +7,5 @@ import { Logo } from './Logo';
 import { Main } from './Main';
 import { ModalComponent } from './Modal';
 
-export { DateTimePickerComponent, Button, CalendarComponent, CheckedModal, CustomModalTimer, Logo, Main, ModalComponent };
+export { Button, CalendarComponent, CheckedModal, CustomModalTimer, DateTimePickerComponent, Logo, Main, ModalComponent };
 

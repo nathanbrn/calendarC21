@@ -35,7 +35,7 @@ export default function Home() {
   const [dataChecked, setDataChecked] = useState<Record<string, MarkedDate>>();
   const [notificationId, setNotificationId] = useState<string | undefined>(undefined);
 
-  const { name, hour, date, infoChecked, setInfoChecked } = useContext(InfoContext);
+  const { name, hour, infoChecked, setInfoChecked } = useContext(InfoContext);
 
   useEffect(() => {
     const auxCurrent = new Date().toISOString().slice(0, 10);
