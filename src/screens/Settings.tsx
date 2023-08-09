@@ -3,8 +3,8 @@ import { useNavigation } from '@react-navigation/native';
 import { useContext, useState } from 'react';
 import { Modal, Switch, Text, View } from 'react-native';
 import { Button, Main } from '../components';
-import { handleDeleteData } from '../utils/handleDeleteData';
 import { InfoContext } from '../context/infoContext';
+import { handleDeleteData } from '../utils/handleDeleteData';
 
 export default function Settings() {
   const [isEnabled, setIsEnabled] = useState(false);

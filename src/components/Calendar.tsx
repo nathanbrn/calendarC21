@@ -1,9 +1,9 @@
 import { useContext, useEffect } from 'react';
 import { Text, View } from 'react-native';
 import { Calendar, LocaleConfig } from 'react-native-calendars';
+import { MarkedDate } from '../@types/calendar.props';
 import { InfoContext } from '../context/infoContext';
 import { formatDate } from '../utils/formatDate';
-import { MarkedDate } from '../@types/calendar.props';
 
 LocaleConfig.locales['pt-br'] = {
   monthNames: [
@@ -31,7 +31,6 @@ LocaleConfig.defaultLocale = 'pt-br';
 export function CalendarComponent() {
   const { date, infoChecked, markedDates, setMarkedDates } = useContext(InfoContext);
 
-  // Função para calcular a data futura com base em uma data de referência
   function calculateFutureDate(date: Date, days: number) {
     const futureDate = new Date(date);
     futureDate.setDate(futureDate.getDate() + days);

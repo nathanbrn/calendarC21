@@ -6,11 +6,10 @@ import {
 } from 'expo-notifications';
 import { useCallback, useContext, useEffect, useRef, useState } from 'react';
 import { Text, View } from 'react-native';
+import { MarkedDate } from '../@types/calendar.props';
 import { CheckedModal, CustomModalTimer, Main, ModalComponent } from '../components';
 import { InfoContext } from '../context/infoContext';
 import { formatDate } from '../utils/formatDate';
-import { MarkedDate } from '../@types/calendar.props';
-import { TesteDateTimePicker } from '../components/TesteDateTimePicker';
 
 setNotificationHandler({
   handleNotification: async () => ({
@@ -36,7 +35,7 @@ export default function Home() {
   const [dataChecked, setDataChecked] = useState<Record<string, MarkedDate>>();
   const [notificationId, setNotificationId] = useState<string | undefined>(undefined);
 
-  const { name, hour, infoChecked, setInfoChecked } = useContext(InfoContext);
+  const { name, hour, date, infoChecked, setInfoChecked } = useContext(InfoContext);
 
   useEffect(() => {
     const auxCurrent = new Date().toISOString().slice(0, 10);
@@ -135,7 +134,7 @@ export default function Home() {
       },
       trigger: {
         channelId: notificationId,
-        date: new Date(`${currentDate}${hour}`),
+        date: new Date(`${currentDate}T${hour}`),
       },
     });
   }
@@ -173,7 +172,6 @@ export default function Home() {
           <Text className='text-white text-2xl'>Carregando...</Text>
         </View>
       )}
-      <TesteDateTimePicker type='time' />
     </Main>
   );
 }

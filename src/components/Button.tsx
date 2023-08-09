@@ -1,3 +1,4 @@
+import { Feather } from '@expo/vector-icons';
 import { Text, TouchableOpacity } from 'react-native';
 
 interface ButtonProps {
@@ -42,6 +43,28 @@ export function Button({ description, onClick, icon, type }: ButtonProps) {
         className='flex-col border mx-auto mb-1 bg-Blue py-3 px-6 rounded-lg mt-4 items-center justify-center bg-purple-500'>
         { icon && <Text className='text-white text-xl font-bold'>{icon}</Text>}
         { description && <Text className='text-white text-sm font-bold'>{description}</Text>}
+      </TouchableOpacity>
+    );
+  } else if (type === 'date') {
+    return (
+      <TouchableOpacity
+        onPress={onClick}
+        className='flex-col mx-auto mb-1 bg-Blue py-3 px-6 rounded-lg mt-4 items-center justify-center'>
+        { icon && <Text className='text-white text-xl font-bold'>{icon}</Text>}
+        { description && <Text className='text-white text-center font-bold'>
+            Clique aqui
+        </Text>}
+      </TouchableOpacity>
+    );
+  } else if (type === 'time') {
+    return (
+      <TouchableOpacity
+        onPress={onClick}
+        className='flex-col mx-auto mb-1 bg-Blue py-3 px-6 rounded-lg mt-4 items-center justify-center'>
+        { icon && <Text className='text-white text-xl font-bold'>{icon}</Text>}
+        { description && <Text className='text-white text-center font-bold'>
+            Clique aqui
+        </Text>}
       </TouchableOpacity>
     );
   }
