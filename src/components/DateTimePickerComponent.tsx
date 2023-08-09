@@ -19,7 +19,7 @@ export const DateTimePickerComponent = ({ type, setSecondaryModalVisible, setTer
   const [mode, setMode] = useState<AndroidMode | undefined>();
   const [show, setShow] = useState<boolean>(false);
 
-  const { date, hour, setHour, setDate } = useContext(InfoContext);
+  const { setHour, setDate } = useContext(InfoContext);
 
   const onChange = (event: DateTimePickerEvent, selectedDate: Date | undefined) => {
     const currentDate = selectedDate;
@@ -27,8 +27,11 @@ export const DateTimePickerComponent = ({ type, setSecondaryModalVisible, setTer
 
     if (mode === 'date') {
       currentDate ? setDateRef(currentDate) : setDateRef(new Date());
-      setDate(currentDate?.toISOString().slice(0, 10));
-      console.log(date);
+      setDate(currentDate?.toLocaleDateString('pt-BR', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+      }).slice(0, 10));
       setSecondaryModalVisible(false);
       setTertiaryModalVisible(true);
     }
@@ -41,7 +44,6 @@ export const DateTimePickerComponent = ({ type, setSecondaryModalVisible, setTer
         second: '2-digit',
       }).slice(0, 8);
       setHour(currentHour);
-      console.log(hour);
     }
   };
 
