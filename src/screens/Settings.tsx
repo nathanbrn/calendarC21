@@ -1,7 +1,7 @@
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { useContext, useState } from 'react';
-import { Modal, Switch, Text, View } from 'react-native';
+import { Modal, Switch, Text, View, Alert } from 'react-native';
 import { Button, Main } from '../components';
 import { InfoContext } from '../context/infoContext';
 import { handleDeleteData } from '../utils/handleDeleteData';
@@ -29,14 +29,19 @@ export default function Settings() {
 
     handleDeleteData();
 
-    alert('Dados apagados com sucesso!');
+    createAlert();
 
     navigation.navigate('initial');
   }
 
+  function createAlert() {
+    Alert.alert('Dados excluídos com sucesso!', 'Todos os dados salvos na memória do celular foram apagados com sucesso...', [
+      {text: 'OK'},
+    ]);
+  }
+
   return (
     <Main>
-
       <View className='mb-2 mt-6 items-center justify-center'>
         <Text className='text-white underline'>Configuração não aplicada</Text>
         <Text className='line-through text-xl font-bold text-white'>Tema</Text>

@@ -1,5 +1,5 @@
 import { useContext, useEffect } from 'react';
-import { Text, View } from 'react-native';
+import { Text, View, Alert } from 'react-native';
 import { Calendar, LocaleConfig } from 'react-native-calendars';
 import { MarkedDates } from 'react-native-calendars/src/types';
 import { MarkedDate } from '../@types/calendar.props';
@@ -28,6 +28,12 @@ LocaleConfig.locales['pt-br'] = {
 };
 
 LocaleConfig.defaultLocale = 'pt-br';
+
+function createAlert() {
+  Alert.alert('Marcação Inválida!', 'Você não pode marcar dias que não estejam na lista de consumo...', [
+    {text: 'OK'},
+  ]);
+}
 
 export function CalendarComponent() {
   const { date, infoChecked, setInfoChecked, markedDates, setMarkedDates } = useContext(InfoContext);
@@ -96,6 +102,11 @@ export function CalendarComponent() {
           setInfoChecked((prevState: Record<string, MarkedDates>) => {
             if (markedDates[dayString]?.periods[0]?.color === 'red') {
               // Não faça nada se o dia já estiver marcado como vermelho
+              return { ...prevState };
+            }
+
+            if (markedDates[dayString] === undefined) {
+              createAlert();
               return { ...prevState };
             }
 
