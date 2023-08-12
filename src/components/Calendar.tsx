@@ -1,5 +1,5 @@
 import { useContext, useEffect } from 'react';
-import { Text, View, Alert } from 'react-native';
+import { Alert, Text, View } from 'react-native';
 import { Calendar, LocaleConfig } from 'react-native-calendars';
 import { MarkedDates } from 'react-native-calendars/src/types';
 import { MarkedDate } from '../@types/calendar.props';
@@ -101,7 +101,6 @@ export function CalendarComponent() {
           const dayString = day.dateString;
           setInfoChecked((prevState: Record<string, MarkedDates>) => {
             if (markedDates[dayString]?.periods[0]?.color === 'red') {
-              // Não faça nada se o dia já estiver marcado como vermelho
               return { ...prevState };
             }
 

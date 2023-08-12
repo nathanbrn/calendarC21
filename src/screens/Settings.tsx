@@ -1,7 +1,7 @@
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { useContext, useState } from 'react';
-import { Modal, Switch, Text, View, Alert } from 'react-native';
+import { Alert, Modal, Switch, Text, View } from 'react-native';
 import { Button, Main } from '../components';
 import { InfoContext } from '../context/infoContext';
 import { handleDeleteData } from '../utils/handleDeleteData';
