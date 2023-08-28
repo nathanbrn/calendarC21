@@ -1,13 +1,8 @@
 import {
-<<<<<<< HEAD
   addNotificationReceivedListener,
   addNotificationResponseReceivedListener,
-=======
   AndroidNotificationPriority,
->>>>>>> b96d7a64b8d91fec3b65b91452eb4f8dc93df58e
-  getExpoPushTokenAsync,
   removeNotificationSubscription,
-  requestPermissionsAsync,
   scheduleNotificationAsync,
   setNotificationHandler
 } from 'expo-notifications';
@@ -40,7 +35,6 @@ export default function Home() {
     year: 'numeric',
   })));
   const [dataChecked, setDataChecked] = useState<Record<string, MarkedDate>>();
-  const [notificationId, setNotificationId] = useState<string | undefined>(undefined);
 
   const { name, hour, infoChecked, setInfoChecked } = useContext(InfoContext);
 
@@ -140,7 +134,6 @@ export default function Home() {
         body: 'Não esqueça de registrar, caso não tenha tomado, aproveite a oportunidade de não gerar uma vida no momento 😇',
         priority: AndroidNotificationPriority.HIGH,
       },
-      identifier: notificationId,
       trigger: {
         repeats: true,
         hour: Number(hour.slice(0, 2)),
