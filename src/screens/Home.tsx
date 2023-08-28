@@ -1,5 +1,8 @@
 import {
+  addNotificationReceivedListener,
+  addNotificationResponseReceivedListener,
   getExpoPushTokenAsync,
+  removeNotificationSubscription,
   requestPermissionsAsync,
   scheduleNotificationAsync,
   setNotificationHandler,
@@ -36,6 +39,24 @@ export default function Home() {
   const [notificationId, setNotificationId] = useState<string | undefined>(undefined);
 
   const { name, hour, infoChecked, setInfoChecked } = useContext(InfoContext);
+
+  const notificationListener = useRef<any>();
+  const responseListener = useRef<any>();
+
+  useEffect(() => {
+    notificationListener.current = addNotificationReceivedListener((notification) => {
+      console.log(notification);
+    });
+
+    responseListener.current = addNotificationResponseReceivedListener((response) => {
+      console.log(response);
+    });
+
+    return () => {
+      removeNotificationSubscription(notificationListener.current);
+      removeNotificationSubscription(responseListener.current);
+    };
+  }, []);
 
   useEffect(() => {
     const auxCurrent = new Date().toISOString().slice(0, 10);
@@ -108,40 +129,24 @@ export default function Home() {
     };
   }, [currentDate]);
 
-  useEffect(() => {
-    (async () => {
-      try {
-        const { status } = await requestPermissionsAsync();
-        const token = (await getExpoPushTokenAsync()).data;
-
-        setNotificationId(token);
-
-        if (status !== 'granted') {
-          alert('Precisamos de permissão para enviar notificações.');
-          return;
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    })();
-  }, []);
-
   async function schedulePushNotification() {
     await scheduleNotificationAsync({
       content: {
         title: 'Já tomou seu remédio hoje? 🤔',
         body: 'Não esqueça de registrar, caso não tenha tomado, aproveite a oportunidade de não gerar uma vida no momento 😇',
       },
+      identifier: notificationId,
       trigger: {
-        channelId: notificationId,
-        date: new Date(`${currentDate}T${hour}`),
+        repeats: true,
+        hour: Number(hour.slice(0, 2)),
+        minute: Number(hour.slice(3, 5)),
       },
     });
   }
 
   useEffect(() => {
     schedulePushNotification();
-  }, [currentDate]);
+  }, []);
 
   return (
     <Main>
