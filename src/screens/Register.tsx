@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { useContext, useLayoutEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useLayoutEffect, useState } from 'react';
 import { Modal, Text, TextInput, View } from 'react-native';
 import Routes from '..';
 import { Button, DateTimePickerComponent, Main } from '../components';
@@ -11,6 +11,13 @@ import { InfoContext } from '../context/infoContext';
 function Initial({ navigation }: any) {
 
   const { name, date, hour } = useContext(InfoContext);
+  const [dispatchRegister, setDispatchRegister] = useState(false);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setDispatchRegister(true);
+    }, 3000);
+  }, []);
 
   useLayoutEffect(() => {
     if (name && date && hour) {
@@ -18,17 +25,25 @@ function Initial({ navigation }: any) {
     }
   }, [name, date, hour, navigation]);
 
-  return (
-    <Main>
-      <View className='flex-1 items-center justify-center'>
-        <Text className='text-4xl text-gray-200 font-bold mb-4'>Bem vindo!</Text>
-        {(!name && !date) && (
+  if (dispatchRegister) {
+    return (
+      <Main>
+        <View className='flex-1 items-center justify-center'>
+          <Text className='text-4xl text-gray-200 font-bold mb-4'>Bem vindo!</Text>
           <Button
             type='confirm'
             description='Começar'
             onClick={() => navigation.navigate('register')}
           />
-        )}
+        </View>
+      </Main>
+    );
+  }
+
+  return (
+    <Main>
+      <View className='flex-1 items-center justify-center'>
+        <Text className='text-4xl text-gray-200 font-bold mb-4'>Bem vindo!</Text>
       </View>
     </Main>
   );
@@ -36,38 +51,11 @@ function Initial({ navigation }: any) {
 
 function Register() {
 
-  const { name, date, hour, setName, setDate, setHour } = useContext(InfoContext);
+  const { name, setName, setDate } = useContext(InfoContext);
 
   const [primaryModalVisible, setPrimaryModalVisible] = useState(true);
   const [secondaryModalVisible, setSecondaryModalVisible] = useState(false);
   const [tertiaryModalVisible, setTertiaryModalVisible] = useState(false);
-
-  const horarios = useRef([
-    '00',
-    '01',
-    '02',
-    '03',
-    '04',
-    '05',
-    '06',
-    '07',
-    '08',
-    '09',
-    '10',
-    '11',
-    '12',
-    '13',
-    '14',
-    '15',
-    '16',
-    '17',
-    '18',
-    '19',
-    '20',
-    '21',
-    '22',
-    '23'
-  ]);
 
   function formatDate(date: string) {
     const dateRegex = /^(\d{2})(\d{2})(\d{4})$/;

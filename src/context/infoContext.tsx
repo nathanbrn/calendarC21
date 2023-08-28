@@ -1,6 +1,6 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ReactNode, createContext, useEffect, useState } from 'react';
 import { MarkedDate } from '../@types/calendar.props';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const InfoContext = createContext<any>({});

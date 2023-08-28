@@ -32,7 +32,7 @@ function DrawerRoutes() {
         name='Home'
         component={Home}
         options={{
-          drawerIcon: ({ focused, size, color }) => (
+          drawerIcon: ({ size, color }) => (
             <Feather name='home' color={color} size={size} />
           ),
           drawerLabel: 'Home',
@@ -42,7 +42,7 @@ function DrawerRoutes() {
         name='Settings'
         component={Settings}
         options={{
-          drawerIcon: ({ focused, size, color }) => (
+          drawerIcon: ({ size, color }) => (
             <Feather name='settings' color={color} size={size} />
           ),
           drawerLabel: 'Settings',

@@ -1,11 +1,15 @@
 import {
+<<<<<<< HEAD
   addNotificationReceivedListener,
   addNotificationResponseReceivedListener,
+=======
+  AndroidNotificationPriority,
+>>>>>>> b96d7a64b8d91fec3b65b91452eb4f8dc93df58e
   getExpoPushTokenAsync,
   removeNotificationSubscription,
   requestPermissionsAsync,
   scheduleNotificationAsync,
-  setNotificationHandler,
+  setNotificationHandler
 } from 'expo-notifications';
 import { useCallback, useContext, useEffect, useRef, useState } from 'react';
 import { Text, View } from 'react-native';
@@ -134,6 +138,7 @@ export default function Home() {
       content: {
         title: 'Já tomou seu remédio hoje? 🤔',
         body: 'Não esqueça de registrar, caso não tenha tomado, aproveite a oportunidade de não gerar uma vida no momento 😇',
+        priority: AndroidNotificationPriority.HIGH,
       },
       identifier: notificationId,
       trigger: {
